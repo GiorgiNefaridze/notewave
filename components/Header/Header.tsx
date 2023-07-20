@@ -7,6 +7,7 @@ const Header = ({ color, size, weight, text }: IProps) => {
   const styles = {
     color,
     fontWeight: weight,
+    textAlign: "center",
   };
 
   return <Text style={[styles, getFontSize(size)]}>{text}</Text>;

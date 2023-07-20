@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   heading1: {
-    fontSize: 40,
+    fontSize: 33,
   },
   heading2: {
     fontSize: 20,
