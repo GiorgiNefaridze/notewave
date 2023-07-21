@@ -7,8 +7,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
+    flexDirection: "row",
+    alignItems: "center",
     paddingTop: 15,
-    alignItems: "flex-end",
+    paddingHorizontal: 25,
   },
   progressBlock: {
     height: 320,
