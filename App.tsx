@@ -1,7 +1,14 @@
-import Introduction from "./screens/Introduction/Introduction";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+
+import ScreenNavigation from "./navigation/ScreenNavigation";
 
 const App = () => {
-  return <Introduction />;
+  return (
+    <NavigationContainer>
+      <ScreenNavigation />
+    </NavigationContainer>
+  );
 };
 
 export default App;

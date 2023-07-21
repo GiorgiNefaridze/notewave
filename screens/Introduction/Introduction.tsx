@@ -15,15 +15,17 @@ import {
   dynamicDescriptionText,
   dynamicHeaderText,
 } from "../../utils/dynamicText";
+import { Routes } from "../../navigation/Routes";
 import Header from "../../components/Header/Header";
 import Button from "../../components/Button/Button";
 
 import styles from "./Introduction.style";
 
-const screenWidth = Dimensions.get("window").width;
+const screenWidth = Dimensions.get("screen").width,
+  screenHeight = Dimensions.get("screen").height;
 const page = 3;
 
-const Introduction = () => {
+const Introduction = ({ navigation }: { navigation: unknown }) => {
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [progress, setProgress] = useState<number>(0);
 
@@ -31,10 +33,19 @@ const Introduction = () => {
     setProgress(calculateProgress(pageIndex, page));
   }, [pageIndex, page]);
 
+  const handelPress = () => {
+    if (pageIndex < 3) {
+      setPageIndex(pageIndex + 1);
+    } else {
+      navigation?.navigate?.(Routes.Home);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View
         style={{
+          height: screenHeight - 370,
           padding: 30,
           paddingHorizontal: 20,
           paddingBottom: 0,
@@ -110,11 +121,7 @@ const Introduction = () => {
           radius={15}
           text={pageIndex === 3 ? "Get Started" : "Next"}
           width={300}
-          handlePress={() => {
-            if (pageIndex < 3) {
-              setPageIndex(pageIndex + 1);
-            }
-          }}
+          handlePress={handelPress}
         />
       </View>
     </SafeAreaView>
