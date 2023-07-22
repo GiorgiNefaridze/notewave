@@ -1,12 +1,7 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import BottomNavigation from "../../navigation/BottomNavigation";
 
 const Home = () => {
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  )
-}
+  return <BottomNavigation />;
+};
 
-export default Home
+export default Home;
