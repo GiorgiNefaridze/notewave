@@ -44,6 +44,7 @@ const BottomNavigation = () => {
     >
       {tabs?.map(({ name, component, active, inactive }: IProps) => (
         <Tab.Screen
+          key={name}
           name={name}
           component={component}
           options={{

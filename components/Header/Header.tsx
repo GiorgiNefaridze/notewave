@@ -3,14 +3,17 @@ import { Text } from "react-native";
 import { IProps } from "./Types";
 import { getFontSize } from "../../utils/getFontSize";
 
-const Header = ({ color, size, weight, text }: IProps) => {
+const Header = ({ color, size, weight, text, align }: IProps) => {
   const styles = {
     color,
     fontWeight: weight,
-    textAlign: "center",
   };
 
-  return <Text style={[styles, getFontSize(size)]}>{text}</Text>;
+  return (
+    <Text style={[styles, getFontSize(size), { textAlign: align ?? "center" }]}>
+      {text}
+    </Text>
+  );
 };
 
 export default Header;
