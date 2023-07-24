@@ -6,6 +6,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingTop: 30,
     rowGap: 15,
+    position: "relative",
+  },
+  loadingIndicator: {
+    ...StyleSheet.absoluteFillObject,
   },
 });
 
