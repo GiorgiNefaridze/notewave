@@ -5,10 +5,10 @@ const styles = StyleSheet.create({
     fontSize: 33,
   },
   heading2: {
-    fontSize: 20,
+    fontSize: 17,
   },
   heading3: {
-    fontSize: 15,
+    fontSize: 13,
   },
 });
 
