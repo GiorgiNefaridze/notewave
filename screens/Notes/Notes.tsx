@@ -30,7 +30,7 @@ const Notes = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header color="black" size={1} text={"Notes"} weight="600" align="left" />
-      <TextInput placeholder={"Search"} />
+      <TextInput placeholder={"Search"} handleChange={() => {}} />
       <View>
         <FlatList
           data={categories}
