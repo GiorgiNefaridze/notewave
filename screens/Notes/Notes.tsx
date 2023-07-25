@@ -53,8 +53,8 @@ const Notes = () => {
         renderItem={({ item }) => <Note {...item} />}
         numColumns={2}
         columnWrapperStyle={{
-          justifyContent: "space-between",
-          marginVertical: 7,
+          columnGap: 10,
+          marginBottom: 10,
         }}
         showsVerticalScrollIndicator={false}
       />

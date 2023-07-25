@@ -4,4 +4,5 @@ export interface IProps {
   weight: string;
   size: number;
   align?: string;
+  fontStyle?: string;
 }
