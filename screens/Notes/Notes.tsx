@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView, FlatList, View, ActivityIndicator } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 
-import { useGetAllNotes } from "../../hooks/useGetAllNotes";
+import { useGetNotes } from "../../hooks/useGetNotes";
 import { categories } from "../../components/NoteCategories/NoteCategories";
 import { notesContext } from "../../context/noteContext";
+import { NOTE_STATUS } from "../../NotesStatus";
 import Header from "../../components/Header/Header";
 import TextInput from "../../components/TextInput/TextInput";
 import NoteCategories from "../../components/NoteCategories/NoteCategories";
@@ -13,12 +14,14 @@ import Note from "../../components/Note/Note";
 import styles from "./Notes.style";
 
 const Notes = () => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
   const isFocused = useIsFocused();
-  const { getAllNotes, loading } = useGetAllNotes();
+  const { getNotes, loading } = useGetNotes();
   const { allNote: notes } = notesContext();
 
   useEffect(() => {
-    getAllNotes();
+    getNotes(NOTE_STATUS.allNotes);
   }, [isFocused]);
 
   if (loading) {
@@ -39,7 +42,13 @@ const Notes = () => {
         <FlatList
           data={categories}
           renderItem={({ item }) => {
-            return <NoteCategories {...item} />;
+            return (
+              <NoteCategories
+                {...item}
+                activeIndex={activeIndex}
+                setActiveIndex={setActiveIndex}
+              />
+            );
           }}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
@@ -55,6 +64,7 @@ const Notes = () => {
       <FlatList
         data={notes}
         renderItem={({ item }) => <Note {...item} />}
+        keyExtractor={(item) => item.title}
         numColumns={2}
         columnWrapperStyle={{
           columnGap: 10,

@@ -6,6 +6,7 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { INotes } from "../../components/Note/Types";
 import { useCreateNote } from "../../hooks/useCreateNote";
 import { Routes } from "../../navigation/Routes";
+import { NOTE_STATUS } from "../../NotesStatus";
 import Header from "../../components/Header/Header";
 import Button from "../../components/Button/Button";
 
@@ -22,12 +23,13 @@ const CreateNote = ({ navigation }: { navigation: unknown }) => {
   };
 
   const handleCreate = async () => {
-    // if (noteTitle?.length < 3 || noteContent?.length < 3) return;
+    if (noteTitle?.length < 3 || noteContent?.length < 3) return;
 
     const note: INotes = {
       title: noteTitle,
       content: noteContent,
       date: new Date().toString(),
+      status: NOTE_STATUS.allNotes,
     };
 
     const createdNote = await createNote(note);

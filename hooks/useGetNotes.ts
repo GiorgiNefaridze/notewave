@@ -3,12 +3,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { notesContext } from "../context/noteContext";
 
-export const useGetAllNotes = () => {
+export const useGetNotes = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const { setallNote } = notesContext();
 
-  const getAllNotes = async () => {
+  const getNotes = async (status: string) => {
     setLoading(true);
     const allNotes = [];
 
@@ -23,8 +23,8 @@ export const useGetAllNotes = () => {
     }
 
     setLoading(false);
-    setallNote(allNotes);
+    setallNote(allNotes?.filter((note) => note?.status === status));
   };
 
-  return { getAllNotes, loading };
+  return { getNotes, loading };
 };

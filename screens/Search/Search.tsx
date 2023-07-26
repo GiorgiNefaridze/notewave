@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { SafeAreaView, View, Dimensions, FlatList } from "react-native";
 
 import { INotes } from "../../components/Note/Types";
-import { useGetAllNotes } from "../../hooks/useGetAllNotes";
+import { useGetNotes } from "../../hooks/useGetNotes";
+import { NOTE_STATUS } from "../../NotesStatus";
 import Header from "../../components/Header/Header";
 import Input from "../../components/TextInput/TextInput";
 import Note from "../../components/Note/Note";
@@ -16,10 +17,10 @@ const Search = () => {
   const [searchedNotes, setSearchedNotes] = useState<INotes[]>([]);
   const [value, setValue] = useState<string>("");
 
-  const { getAllNotes, loading, notes } = useGetAllNotes();
+  const { getNotes, loading, notes } = useGetNotes();
 
   useEffect(() => {
-    getAllNotes();
+    getNotes(NOTE_STATUS.allNotes);
   }, []);
 
   useEffect(() => {
