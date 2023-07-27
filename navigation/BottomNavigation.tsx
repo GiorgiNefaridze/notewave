@@ -39,7 +39,7 @@ const tabs = [
 const BottomNavigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName={Routes.CreateNotes}
+      initialRouteName={Routes.Notes}
       screenOptions={{ header: () => {} }}
     >
       {tabs?.map(({ name, component, active, inactive }: IProps) => (

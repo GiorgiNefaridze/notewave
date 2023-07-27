@@ -19,7 +19,7 @@ const NoteCategories = ({
 }: IProps) => {
   const [active, setActive] = useState<boolean>(false);
 
-  const { getNotes } = useGetNotes(); /////////
+  const { getNotes } = useGetNotes();
 
   useEffect(() => {
     if (activeIndex === id) {
@@ -34,14 +34,14 @@ const NoteCategories = ({
       style={[
         styles.categoryBox,
         {
-          marginLeft: id == 2 || id == 4 ? 10 : 0, /////
+          marginLeft: id == 2 || id == 4 ? 10 : 0,
           width: boxSize,
           marginBottom: 10,
           backgroundColor: active ? labelColor : "#FFFFFF",
         },
       ]}
       onPress={() => {
-        setActiveIndex(id), getNotes(status); ////////////////
+        setActiveIndex(id), getNotes(status);
       }}
     >
       <Image source={icon} />

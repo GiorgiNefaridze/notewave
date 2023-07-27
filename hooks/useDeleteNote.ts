@@ -2,20 +2,18 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { INotes } from "../components/Note/Types";
 import { NotesContext } from "../context/noteContext";
-import { useGetNotes } from "./useGetNotes";
 
 export const useDeleteNote = () => {
   const { setallNote } = NotesContext();
 
-  const { getNotes } = useGetNotes();
-
   const deleteNote = async (noteData: INotes, status: string) => {
-    const deleteNote = { ...noteData, status },
-      updatedNotes = [];
+    const deletedNote: INotes = { ...noteData, status };
 
-    await AsyncStorage.setItem(noteData?.title, JSON.stringify(deleteNote));
+    await AsyncStorage.setItem(deletedNote?.title, JSON.stringify(deletedNote));
 
-    await getNotes(status);
+    setallNote((prevNotes) =>
+      prevNotes?.filter((note) => note?.title !== deletedNote?.title)
+    );
   };
 
   return { deleteNote };

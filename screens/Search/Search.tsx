@@ -18,8 +18,8 @@ const Search = () => {
   const [searchedNotes, setSearchedNotes] = useState<INotes[]>([]);
   const [value, setValue] = useState<string>("");
 
-  const { getNotes, loading, notes } = useGetNotes(); //////
-  const { allNote } = NotesContext(); /////////
+  const { getNotes } = useGetNotes();
+  const { allNote } = NotesContext();
 
   useEffect(() => {
     getNotes(NOTE_STATUS.allNotes);

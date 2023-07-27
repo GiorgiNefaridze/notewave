@@ -1,10 +1,5 @@
-import { useState } from "react";
-import {
-  SafeAreaView,
-  View,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { useEffect, useState } from "react";
+import { SafeAreaView, View, TouchableOpacity, TextInput } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,55 +12,60 @@ import Button from "../../components/Button/Button";
 
 import styles from "./CreateNote.style";
 
-const List = ({ text }: { text: string }) => {
-  const [hovered, setHovered] = useState<boolean>(false);
+interface IProps {
+  navigation: unknown;
+}
 
-  return (
-    <View
-      style={[styles.modalCategory, hovered && { backgroundColor: "#E6E6E7" }]}
-      onTouchStart={() => setHovered(true)}
-      onTouchEnd={() => setHovered(false)}
-    >
-      <Header color="#1C2121" size={3} text={text} weight="400" align="left" />
-    </View>
-  );
-};
-
-
-const CreateNote = ({ navigation }: { navigation: unknown }) => {
-  const [showModal, setShowModal] = useState<boolean>(true);
+const CreateNote = ({ navigation }: IProps) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [noteTitle, setNoteTitle] = useState<string>("");
   const [noteContent, setNoteContent] = useState<string>("");
+  const [noteStatus, setNoteStatus] = useState<string>("");
 
   const { createNote } = useCreateNote();
 
-  const goBack = () => {
-    navigation?.goBack?.();
-  };
+  useEffect(() => {
+    if (noteStatus?.length > 1 && !showModal) {
+      handleCreate();
+    }
+  }, [noteStatus, showModal]);
 
   const handleCreate = async () => {
-    if (noteTitle?.length < 3 || noteContent?.length < 3) return;
+    if (
+      noteTitle?.length < 3 ||
+      noteContent?.length < 3 ||
+      noteStatus?.length < 1
+    )
+      return;
 
     const note: INotes = {
       title: noteTitle,
       content: noteContent,
       date: new Date().toString(),
-      status: "", /// ============================,
+      status: noteStatus,
     };
 
-    const createdNote = await createNote(note); /// ============================,
-
-    if (createdNote) {
+    if (await createNote(note)) {
       setNoteTitle("");
       setNoteContent("");
+      setNoteStatus("");
       navigation?.navigate?.(Routes.Notes);
     }
   };
 
   return (
     <SafeAreaView style={styles.conatiner}>
-      {showModal && <Modal />}
-      <TouchableOpacity style={styles.header} onPress={goBack}>
+      {showModal && (
+        <Modal
+          setShowModal={setShowModal}
+          setNoteStatus={setNoteStatus}
+          noteStatus={noteStatus}
+        />
+      )}
+      <TouchableOpacity
+        style={styles.header}
+        onPress={() => navigation?.goBack?.()}
+      >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <FontAwesomeIcon icon={faAngleLeft} color="#007AFF" />
           <Header
@@ -79,12 +79,13 @@ const CreateNote = ({ navigation }: { navigation: unknown }) => {
         <Button
           bgcolor="#1F2124"
           radius={15}
-          text="Save as"
+          text="Save"
           width={70}
           height={35}
           handlePress={() => {
-            handleCreate();
-            setShowModal((prev) => !prev);
+            if (noteContent?.length < 3 || noteTitle?.length < 3) return;
+
+            setShowModal(true);
           }}
         />
       </TouchableOpacity>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { View, Dimensions, TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowUpWideShort, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -6,11 +6,12 @@ import CheckBox from "react-native-check-box";
 
 import { NOTE_STATUS } from "../../NotesStatus";
 import Header from "../Header/Header";
+import Button from "../Button/Button";
 
 import styles from "./Modal.style";
 
 const modalWidth: number = Dimensions.get("screen").width,
-  modalHeight: number = Dimensions.get("screen").height / 3;
+  modalHeight: number = Dimensions.get("screen").height / 2.5;
 
 const categories = [
   NOTE_STATUS.allNotes,
@@ -19,13 +20,25 @@ const categories = [
   NOTE_STATUS.Trash,
 ];
 
-interface IProps {
+interface ICheck {
   text: string;
   activeIndicator: string;
-  setActiveIndicator: React.Dispatch<React.SetStateAction<string>>;
+  setActiveIndicator: Dispatch<SetStateAction<string>>;
+  setNoteStatus: Dispatch<SetStateAction<string>>;
 }
 
-const Check = ({ text, activeIndicator, setActiveIndicator }: IProps) => {
+interface IModal {
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+  setNoteStatus: Dispatch<SetStateAction<string>>;
+  noteStatus: string;
+}
+
+const Check = ({
+  text,
+  activeIndicator,
+  setActiveIndicator,
+  setNoteStatus,
+}: ICheck) => {
   const [active, setActive] = useState<boolean>(false);
 
   useEffect(() => {
@@ -39,15 +52,27 @@ const Check = ({ text, activeIndicator, setActiveIndicator }: IProps) => {
   return (
     <CheckBox
       isChecked={active}
-      onClick={() => setActiveIndicator(text)}
+      onClick={() => {
+        setActiveIndicator(text);
+        setNoteStatus(text);
+      }}
       rightText={text}
       rightTextStyle={{ textTransform: "uppercase" }}
     />
   );
 };
 
-const Modal = () => {
+const Modal = ({ setShowModal, setNoteStatus, noteStatus }: IModal) => {
   const [activeIndicator, setActiveIndicator] = useState<string>("");
+
+  useEffect(() => {
+    setNoteStatus("");
+  }, []);
+
+  const handleClose = () => {
+    setNoteStatus("");
+    setShowModal(false);
+  };
 
   return (
     <View
@@ -72,24 +97,54 @@ const Modal = () => {
             align="left"
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleClose}>
           <FontAwesomeIcon icon={faXmark} />
         </TouchableOpacity>
       </View>
       <View
         style={{
-          height: modalHeight - modalHeight / 4,
+          height: modalHeight - modalHeight / 0.5,
           justifyContent: "center",
-          rowGap: 10,
+          rowGap: 15,
         }}
       >
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <Check
+            key={index}
             text={category}
             activeIndicator={activeIndicator}
             setActiveIndicator={setActiveIndicator}
+            setNoteStatus={setNoteStatus}
           />
         ))}
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
+          bgcolor="#007AFF"
+          text="Save"
+          radius={5}
+          width={150}
+          height={40}
+          handlePress={() => {
+            if (noteStatus?.length > 1) {
+              setShowModal(false);
+            }
+          }}
+        />
+        <Button
+          bgcolor="#007AFF"
+          text="Cancel"
+          radius={5}
+          width={150}
+          height={40}
+          handlePress={handleClose}
+        />
       </View>
     </View>
   );

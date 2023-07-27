@@ -17,11 +17,11 @@ const Notes = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const isFocused = useIsFocused();
-  const { getNotes, loading } = useGetNotes(); /////////////;
+  const { getNotes, loading } = useGetNotes();
   const { allNote: notes } = NotesContext();
 
   useEffect(() => {
-    getNotes(NOTE_STATUS.allNotes); //////////
+    getNotes(NOTE_STATUS.allNotes);
     setActiveIndex(1);
   }, [isFocused]);
 

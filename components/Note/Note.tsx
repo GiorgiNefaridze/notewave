@@ -14,7 +14,7 @@ const screenWidth = Dimensions.get("screen").width,
 const Note = ({ content, date, title, status }: INotes) => {
   const [deleteIndicator, setDeleteIndicator] = useState<boolean>(false);
 
-  const { deleteNote } = useDeleteNote(); /////////
+  const { deleteNote } = useDeleteNote();
 
   const width =
     content?.length > 100
@@ -27,7 +27,9 @@ const Note = ({ content, date, title, status }: INotes) => {
         styles.noteContainer,
         { width, backgroundColor: deleteIndicator ? "red" : "white" },
       ]}
-      onLongPress={() => setDeleteIndicator((prev) => !prev)}
+      onLongPress={() =>
+        setDeleteIndicator((prev) => status !== NOTE_STATUS.Trash && !prev)
+      }
     >
       {!deleteIndicator && (
         <>
@@ -60,9 +62,8 @@ const Note = ({ content, date, title, status }: INotes) => {
           style={{ flex: 1, alignItems: "flex-end", justifyContent: "center" }}
         >
           <Pressable
-            onPress={
-              () =>
-                deleteNote({ content, date, title, status }, NOTE_STATUS.Trash) /////////
+            onPress={() =>
+              deleteNote({ content, date, title, status }, NOTE_STATUS.Trash)
             }
           >
             <Image

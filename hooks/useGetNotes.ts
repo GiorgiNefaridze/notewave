@@ -26,7 +26,9 @@ export const useGetNotes = () => {
     setLoading(false);
 
     if (NOTE_STATUS.allNotes == status) {
-      setallNote(allNotes);
+      setallNote(
+        allNotes?.filter((note) => note?.status !== NOTE_STATUS.Trash)
+      );
     } else {
       setallNote(allNotes?.filter((note) => note?.status === status));
     }
