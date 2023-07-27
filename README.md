@@ -12,10 +12,10 @@
 
 ## How to see/start my React Native (Expo) Project ? 📱
 
-**Download and install** [Node.js](https://nodejs.org/en/) 
+**Download and install** [Node.js](https://nodejs.org/en/)
 then clone this repository to your computer using Git
 
-```shell 
+```shell
 git clone https://github.com/GiorgiNefaridze/notewave
 ```
 
