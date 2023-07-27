@@ -4,11 +4,13 @@
 
 **Notewave** is a platform, which gives you an opportunity to take notes from your device.
 
+
 <div style="display:flex, column-gap:10px">
-    <img src="./assets/splashScreen.png"  width="150px" height="500px"  />
-    <img src="./assets/intro.png"  width="150px" height="500px"  />
-    <img src="./assets/home.png"  width="150px" height="500px"  />
+    <img src="./assets/splashScreen.png"  style="object-fit: cover;  width="150px" height="500px"  />
+    <img src="./assets/intro.png"  style="object-fit: cover;  width="150px" height="500px"  />
+    <img src="./assets/home.png"   style="object-fit: cover; width="150px" height="500px"  />
 </div>
+
 
 ## How to see/start my React Native (Expo) Project ? 📱
 
