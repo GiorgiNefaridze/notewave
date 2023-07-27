@@ -7,14 +7,14 @@ const Button = ({
   bgcolor: backgroundColor,
   height,
   width,
-  radius,
+  radius: borderRadius,
   handlePress,
 }: IProps) => {
   const styles = {
     backgroundColor,
     width,
     height,
-    borderRadius: radius,
+    borderRadius,
     alignItems: "center",
     justifyContent: "center",
   };

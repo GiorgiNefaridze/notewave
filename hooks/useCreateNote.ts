@@ -8,7 +8,7 @@ export const useCreateNote = () => {
 
     const newNote = await AsyncStorage.getItem(note?.title);
 
-    if (newNote) {
+    if (newNote && Object.keys(JSON.parse(newNote)).length) {
       return true;
     } else {
       return false;

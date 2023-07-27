@@ -3,6 +3,7 @@ import { SafeAreaView, View, Dimensions, FlatList } from "react-native";
 
 import { INotes } from "../../components/Note/Types";
 import { useGetNotes } from "../../hooks/useGetNotes";
+import { NotesContext } from "../../context/noteContext";
 import { NOTE_STATUS } from "../../NotesStatus";
 import Header from "../../components/Header/Header";
 import Input from "../../components/TextInput/TextInput";
@@ -11,13 +12,14 @@ import Note from "../../components/Note/Note";
 import styles from "./Search.style";
 
 const screenPadding = 25,
-  width = Dimensions.get("screen").width - 2 * screenPadding;
+  width: number = Dimensions.get("screen").width - 2 * screenPadding;
 
 const Search = () => {
   const [searchedNotes, setSearchedNotes] = useState<INotes[]>([]);
   const [value, setValue] = useState<string>("");
 
-  const { getNotes, loading, notes } = useGetNotes();
+  const { getNotes, loading, notes } = useGetNotes(); //////
+  const { allNote } = NotesContext(); /////////
 
   useEffect(() => {
     getNotes(NOTE_STATUS.allNotes);
@@ -26,7 +28,7 @@ const Search = () => {
   useEffect(() => {
     if (value) {
       setSearchedNotes(
-        notes?.filter(({ title }: INotes) =>
+        allNote?.filter(({ title }: INotes) =>
           title.toLocaleLowerCase().includes(value.toLocaleLowerCase())
         )
       );

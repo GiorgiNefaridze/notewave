@@ -3,8 +3,8 @@ import { SafeAreaView, FlatList, View, ActivityIndicator } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 
 import { useGetNotes } from "../../hooks/useGetNotes";
-import { categories } from "../../components/NoteCategories/NoteCategories";
-import { notesContext } from "../../context/noteContext";
+import { categories } from "../../NotesCategories";
+import { NotesContext } from "../../context/noteContext";
 import { NOTE_STATUS } from "../../NotesStatus";
 import Header from "../../components/Header/Header";
 import TextInput from "../../components/TextInput/TextInput";
@@ -14,14 +14,15 @@ import Note from "../../components/Note/Note";
 import styles from "./Notes.style";
 
 const Notes = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const isFocused = useIsFocused();
-  const { getNotes, loading } = useGetNotes();
-  const { allNote: notes } = notesContext();
+  const { getNotes, loading } = useGetNotes(); /////////////;
+  const { allNote: notes } = NotesContext();
 
   useEffect(() => {
-    getNotes(NOTE_STATUS.allNotes);
+    getNotes(NOTE_STATUS.allNotes); //////////
+    setActiveIndex(1);
   }, [isFocused]);
 
   if (loading) {
@@ -52,6 +53,7 @@ const Notes = () => {
           }}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
+          showsVerticalScrollIndicator={false}
         />
       </View>
       <Header

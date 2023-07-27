@@ -1,12 +1,13 @@
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { notesContext } from "../context/noteContext";
+import { NOTE_STATUS } from "../NotesStatus";
+import { NotesContext } from "../context/noteContext";
 
 export const useGetNotes = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { setallNote } = notesContext();
+  const { setallNote } = NotesContext();
 
   const getNotes = async (status: string) => {
     setLoading(true);
@@ -23,7 +24,12 @@ export const useGetNotes = () => {
     }
 
     setLoading(false);
-    setallNote(allNotes?.filter((note) => note?.status === status));
+
+    if (NOTE_STATUS.allNotes == status) {
+      setallNote(allNotes);
+    } else {
+      setallNote(allNotes?.filter((note) => note?.status === status));
+    }
   };
 
   return { getNotes, loading };

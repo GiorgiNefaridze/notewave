@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  inp: {
+  input: {
     borderRadius: 10,
     backgroundColor: "white",
     padding: 8,

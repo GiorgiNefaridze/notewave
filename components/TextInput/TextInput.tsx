@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { TextInput } from "react-native";
 
-import styles from "./TextInput.style";
+import { IProps } from "./Types";
 
-interface IProps {
-  placeholder: string;
-  handleChange?: (value: string) => void;
-}
+import styles from "./TextInput.style";
 
 const Input = ({ placeholder, handleChange }: IProps) => {
   const [value, setValue] = useState<string>("");
@@ -20,7 +17,7 @@ const Input = ({ placeholder, handleChange }: IProps) => {
       }}
       placeholder={placeholder}
       placeholderTextColor={"#1C2121"}
-      style={styles.inp}
+      style={styles.input}
     />
   );
 };

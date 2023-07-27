@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  box: {
+  categoryBox: {
     flex: 1,
     height: 50,
     borderRadius: 10,

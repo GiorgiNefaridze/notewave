@@ -13,17 +13,17 @@ interface INotesContext {
   setallNote: Dispatch<SetStateAction<INotes[]>>;
 }
 
+interface IProps {
+  children: JSX.Element;
+}
+
 const notes = createContext<INotesContext>({} as INotesContext);
 
-export const notesContext = () => {
+export const NotesContext = () => {
   return useContext(notes);
 };
 
-export const NotesContextProvider = ({
-  children,
-}: {
-  children: JSX.Element;
-}) => {
+export const NotesContextProvider = ({ children }: IProps) => {
   const [allNote, setallNote] = useState<INotes[]>([]);
 
   return (

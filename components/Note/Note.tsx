@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Dimensions, Pressable, Image } from "react-native";
 
 import { INotes } from "./Types";
+import { NOTE_STATUS } from "../../NotesStatus";
 import { useDeleteNote } from "../../hooks/useDeleteNote";
 import Header from "../Header/Header";
 
@@ -13,11 +14,11 @@ const screenWidth = Dimensions.get("screen").width,
 const Note = ({ content, date, title, status }: INotes) => {
   const [deleteIndicator, setDeleteIndicator] = useState<boolean>(false);
 
-  const { deleteNote } = useDeleteNote();
+  const { deleteNote } = useDeleteNote(); /////////
 
   const width =
     content?.length > 100
-      ? screenWidth / 2 - screenPadding - 40
+      ? screenWidth / 2 - 2 * screenPadding
       : screenWidth - 2 * screenPadding;
 
   return (
@@ -28,7 +29,7 @@ const Note = ({ content, date, title, status }: INotes) => {
       ]}
       onLongPress={() => setDeleteIndicator((prev) => !prev)}
     >
-      {deleteIndicator == false && (
+      {!deleteIndicator && (
         <>
           <Header
             color="#1C2121"
@@ -54,17 +55,19 @@ const Note = ({ content, date, title, status }: INotes) => {
           />
         </>
       )}
-
       {deleteIndicator && (
         <View
           style={{ flex: 1, alignItems: "flex-end", justifyContent: "center" }}
         >
           <Pressable
-            onPress={() => deleteNote({ content, date, title, status })}
+            onPress={
+              () =>
+                deleteNote({ content, date, title, status }, NOTE_STATUS.Trash) /////////
+            }
           >
             <Image
               source={require("../../assets/trashIcon.png")}
-              style={{ width: 50, height: 50 }}
+              style={styles.trashIcon}
             />
           </Pressable>
         </View>

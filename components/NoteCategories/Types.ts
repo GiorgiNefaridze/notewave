@@ -6,6 +6,6 @@ export interface IProps {
   label: string;
   status: string;
   labelColor: string;
-  activeIndex: number | null;
-  setActiveIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  activeIndex: number;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
 }
