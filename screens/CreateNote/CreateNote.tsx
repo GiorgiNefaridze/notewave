@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { SafeAreaView, View, TouchableOpacity, TextInput } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 import { INotes } from "../../components/Note/Types";
 import { useCreateNote } from "../../hooks/useCreateNote";
@@ -41,7 +42,7 @@ const CreateNote = ({ navigation }: IProps) => {
     const note: INotes = {
       title: noteTitle,
       content: noteContent,
-      date: new Date().toString(),
+      date: moment().format("lll"),
       status: noteStatus,
     };
 
