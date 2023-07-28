@@ -65,7 +65,7 @@ const Notes = () => {
       />
       <FlatList
         data={notes}
-        renderItem={({ item }) => <Note {...item} />}
+        renderItem={({ item }) => <Note {...item} allNoteIndex={activeIndex} />}
         keyExtractor={(item) => item.title}
         numColumns={2}
         columnWrapperStyle={{

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Dimensions, Pressable, Image } from "react-native";
 
 import { INotes } from "./Types";
+import { noteBgColorsBasedOnStatus } from "./NoteBgColors";
 import { NOTE_STATUS } from "../../NotesStatus";
 import { useDeleteNote } from "../../hooks/useDeleteNote";
 import Header from "../Header/Header";
@@ -11,8 +12,9 @@ import styles from "./Note.style";
 const screenWidth = Dimensions.get("screen").width,
   screenPadding = 25;
 
-const Note = ({ content, date, title, status }: INotes) => {
+const Note = ({ content, date, title, status, allNoteIndex }: INotes) => {
   const [deleteIndicator, setDeleteIndicator] = useState<boolean>(false);
+  const [bgColor, setBgColor] = useState<string>("white");
 
   const { deleteNote } = useDeleteNote();
 
@@ -21,11 +23,22 @@ const Note = ({ content, date, title, status }: INotes) => {
       ? screenWidth / 2 - 2 * screenPadding
       : screenWidth - 2 * screenPadding;
 
+  useEffect(() => {
+    if (allNoteIndex == 1) {
+      setBgColor(noteBgColorsBasedOnStatus.allNotes);
+    } else {
+      setBgColor(noteBgColorsBasedOnStatus[status]);
+    }
+  }, [status, allNoteIndex]);
+
   return (
     <Pressable
       style={[
         styles.noteContainer,
-        { width, backgroundColor: deleteIndicator ? "red" : "white" },
+        {
+          width,
+          backgroundColor: deleteIndicator ? "red" : bgColor,
+        },
       ]}
       onLongPress={() =>
         setDeleteIndicator((prev) => status !== NOTE_STATUS.Trash && !prev)

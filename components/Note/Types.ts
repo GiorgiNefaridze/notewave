@@ -3,4 +3,5 @@ export interface INotes {
   content: string;
   status: string;
   date: string;
+  allNoteIndex: number;
 }
